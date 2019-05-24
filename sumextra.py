@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter.scrolledtext import *
 
-window = tk.TK()
+window = tk.Tk()
 window.title("Read-O-Tron")
 window.geometry('700x600')
 window.config(background='blue')
@@ -31,7 +31,6 @@ def speak_it():
     engine.setProperty('voice', en_voice_id)
     engine.say('Hello,This is my voice.')
     rate = engine.getProperty('rate')
-    engine.setProperty('rate')
     engine.setProperty('rate', rate - 50)
     engine.say('I am going to read the following text to you.')
     text_format = entry.get('1.0', tk.END)
@@ -43,7 +42,7 @@ def speak_it():
 
 def print_voice_list(engine):
     voices = engine.getProperty('voices')
-    voices_list = []
+    voice_list = []
     for voice in voices:
         print("Voice:")
         print(" - ID: %s" % voice.id)
@@ -61,3 +60,19 @@ def print_voice_list(engine):
         voice_list.append(voice_current)
         print(voice_list)
     output_display.insert(tk.END, "test")
+
+label_text_to_summarize = Label(tab_main, text='Enter Text to Read', padx=5, pady=5)
+label_text_to_summarize.grid(row=1, column=0)
+entry = ScrolledText(tab_main, height=12)
+entry.grid(row=2, column=0, columnspan=5, padx=5, pady=5)
+
+button_run = Button(tab_main, text="Invoke Read-O-Tron", command=speak_it, width=22, bg='#25d366', fg='#fff')
+button_run.grid(row=4, column=0, padx=10, pady=10)
+button_erase_input = Button(tab_main, text='Erase Input', command='erase_input', width=12, bg='#25d366', fg='#fff')
+button_erase_input.grid(row=5, column=0, padx=10, pady=10)
+
+output_display = ScrolledText(tab_main)
+output_display.grid(row=5, column=0, columnspan=5, padx=5, pady=5)
+output_display = ScrolledText(tab_main, height=5)
+
+window.mainloop()
